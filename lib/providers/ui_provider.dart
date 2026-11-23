@@ -1,7 +1,7 @@
 
 import 'package:flutter/widgets.dart';
 
-class UiProvider extends ChangeNotifier {
+class UIProvider extends ChangeNotifier {
   int _selectedMenuOpt = 1;
 
   int get selectedMenuOpt => _selectedMenuOpt;

@@ -5,7 +5,11 @@ import 'package:qr_scan/providers/ui_provider.dart';
 import 'package:qr_scan/screens/home_screen.dart';
 import 'package:qr_scan/screens/mapa_screen.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(MultiProvider(
+  providers: [
+    ChangeNotifierProvider(create: (_) => UiProvider())],
+    child: MyApp(),
+));
 
 
 

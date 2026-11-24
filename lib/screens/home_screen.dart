@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_scan/models/scan_model.dart';
 import 'package:qr_scan/providers/db_provider.dart';
 import 'package:qr_scan/providers/ui_provider.dart';
 import 'package:qr_scan/screens/screens.dart';
@@ -38,6 +39,8 @@ class _HomeScreenBody extends StatelessWidget {
     final currentIndex = uiProvider.selectedMenuOpt;
 
     DBProvider.db.database;
+    ScanModel nouScan = ScanModel(valor: "https://paucasesnovescifp.cat");
+    DBProvider.db.insertScan(nouScan);
 
     switch (currentIndex) {
       case 0:

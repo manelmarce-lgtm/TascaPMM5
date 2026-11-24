@@ -76,7 +76,7 @@ class DBProvider {
   Future<ScanModel?> getScanByTipus(String tipus) async {
     final db = await database;
     final res = await db.query('Scans', where: 'tipus = ?', whereArgs: [tipus]);
-    return res.isNotEmpty ? ScanModel.fromMap(res.first) : null;
+    return List<ScanModel>.from(res.map((e) => ScanModel.fromMap(e))).first;
   }
 
   Future<int> updateScan(ScanModel nouScan) async {

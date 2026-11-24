@@ -73,10 +73,12 @@ class DBProvider {
     return res.isNotEmpty ? ScanModel.fromMap(res.first) : null;
   }
 
-  Future<ScanModel?> getScanByTipus(String tipus) async {
-    final db = await database;
-    final res = await db.query('Scans', where: 'tipus = ?', whereArgs: [tipus]);
-    return List<ScanModel>.from(res.map((e) => ScanModel.fromMap(e))).first;
+  Future<List<ScanModel>> getScanByTipus(String tipus) async {
+  final db = await database;
+  final res = await db.query('Scans', where: 'tipus = ?', whereArgs: [tipus]);
+  return res.isNotEmpty
+      ? res.map((e) => ScanModel.fromMap(e)).toList()
+      : [];
   }
 
   Future<int> updateScan(ScanModel nouScan) async {
@@ -89,6 +91,12 @@ class DBProvider {
   Future<int> deleteScan(int id) async {
     final db = await database;
     final res = await db.delete('Scans', where: 'id = ?', whereArgs: [id]);
+    return res;
+  }
+
+  Future<int> deleteAllScans() async {
+    final db = await database;
+    final res = await db.delete('Scans');
     return res;
   }
 

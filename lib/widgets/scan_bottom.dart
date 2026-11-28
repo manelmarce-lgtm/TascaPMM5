@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:qr_scan/models/scan_model.dart';
 import 'package:qr_scan/providers/scan_list_provider.dart';
 
 class ScanButton extends StatelessWidget {
@@ -18,6 +17,8 @@ class ScanButton extends StatelessWidget {
         final scanListProvider =
             Provider.of<ScanListProvider>(context, listen: false);
         scanListProvider.nouScan(barcodeScanRes);
+        String barcodeScanRes1 = "https:\\www.google.com";
+        scanListProvider.nouScan(barcodeScanRes1);
       },
     );
   }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_scan/providers/scan_list_provider.dart';
 
@@ -15,7 +14,22 @@ class ScanTiles extends StatelessWidget {
 
     return ListView.builder(
       itemCount: scans.length,
-      itemBuilder: (_, index) => ListTile(
+      itemBuilder: (_, index) => Dismissible(
+        key: UniqueKey(),
+        background: Container(
+          color: Colors.red,
+          child: const Align(
+            child:Padding(
+            padding: EdgeInsets.all(0.0),
+            child: Icon(Icons.delete_forever),
+          ),
+          alignment: Alignment.centerRight,
+          ),
+        ),
+        onDismissed: ( DismissDirection direction) {
+          Provider.of<ScanListProvider>(context, listen: false).esborrarPerId(scans[index].id!);
+        },
+        child: ListTile(
         leading: Icon(
           tipus == 'http' ? Icons.home_outlined : Icons.map_outlined,
         ),
@@ -23,6 +37,7 @@ class ScanTiles extends StatelessWidget {
         subtitle: Text(scans[index].id.toString()),
         trailing: Icon(Icons.keyboard_arrow_right, color: Colors.grey),
         onTap: () {},
+      ),
       ),
     );
   }

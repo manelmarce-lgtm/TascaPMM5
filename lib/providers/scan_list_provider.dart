@@ -13,33 +13,35 @@ class ScanListProvider extends ChangeNotifier {
 
     if(nouScan.tipus == tipusSeleccionat) {
       this.scans.add(nouScan);
+      notifyListeners();
     }
     return nouScan;
   }
   
-  void carregarScans() async {
+  carregarScans() async {
     final scans = await DBProvider.db.getAllScans();
     this.scans = [...scans];
-    this.notifyListeners();
+    notifyListeners();
   }
 
-  void carregarScansPerTipus(String tipus) async {
+  carregarScansPerTipus(String tipus) async {
     final scans = await DBProvider.db.getScanByTipus(tipus);
     this.scans = [...scans];
-    this.tipusSeleccionat = tipus;
-    this.notifyListeners();
+    tipusSeleccionat = tipus;
+    notifyListeners();
   }
 
-  void borrarTots() async{
+  esborrarTots() async{
     await DBProvider.db.deleteAllScans();
-    this.scans = [];
+    scans = [];
+    notifyListeners();
   }
 
-  void borrarScanPerId(int id) async {
+  esborrarPerId(int id) async {
     final eliminat = await DBProvider.db.deleteScan(id);
     if(eliminat > 0) {
-      this.scans.removeWhere((scan) => scan.id == id);
-      this.notifyListeners();
+      scans.removeWhere((scan) => scan.id == id);
+      notifyListeners();
     }
 }
 }

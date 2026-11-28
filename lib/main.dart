@@ -1,17 +1,18 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_scan/providers/scan_list_provider.dart';
 import 'package:qr_scan/providers/ui_provider.dart';
 import 'package:qr_scan/screens/home_screen.dart';
 import 'package:qr_scan/screens/mapa_screen.dart';
 
 void main() => runApp(MultiProvider(
-  providers: [
-    ChangeNotifierProvider(create: (_) => UiProvider())],
-    child: MyApp(),
-));
-
-
+      providers: [
+        ChangeNotifierProvider(create: (_) => UIProvider()),
+        ChangeNotifierProvider(create: (_) => ScanListProvider())
+      ],
+      child: MyApp(),
+    ));
 
 class AppState extends StatelessWidget {
   const AppState({Key? key}) : super(key: key);
@@ -19,20 +20,18 @@ class AppState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers:[
-        ChangeNotifierProvider(create: (_) => UiProvider(),
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => UIProvider(),
         ),
-        ChangeNotifierProvider(create: (_) => ScanListProvider(),
+        ChangeNotifierProvider(
+          create: (_) => ScanListProvider(),
         ),
       ],
       child: MyApp(),
     );
   }
 }
-
-
-
-
 
 class MyApp extends StatelessWidget {
   @override

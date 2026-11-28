@@ -11,11 +11,10 @@ class DBProvider {
 
   DBProvider._();
 
-  Future <Database> get database async{
-    if(_database != null) return _database = await initDB();
+  Future<Database> get database async {
+    if (_database != null) return _database = await initDB();
     _database = await initDB();
     return _database!;
-
   }
 
   Future<Database> initDB() async {
@@ -24,19 +23,16 @@ class DBProvider {
     final path = join(documentsDirectory.path, 'Scans.db');
 
     //Crear base de datos
-    return await openDatabase(
-      path,
-      version: 1,
-      onOpen: (db) {},
-      onCreate:(Database db, int version) async{
-        await db.execute('''
+    return await openDatabase(path, version: 1, onOpen: (db) {},
+        onCreate: (Database db, int version) async {
+      await db.execute('''
           CREATE TABLE Scans(
             id INTEGER PRIMARY KEY,
             tipus TEXT,
             valor TEXT
           )
         ''');
-      });
+    });
   }
 
   InserRawScan(ScanModel nouScan) async {
@@ -49,9 +45,8 @@ class DBProvider {
       INSERT INTO Scans(id, tipus, valor)
       VALUES ($id, '$tipus', '$valor')
       ''');
-      return res;
+    return res;
   }
-
 
   Future<int> insertScan(ScanModel nouScan) async {
     final db = await database;
@@ -62,9 +57,7 @@ class DBProvider {
   Future<List<ScanModel>> getAllScans() async {
     final db = await database;
     final res = await db.query('Scans');
-    return res.isNotEmpty
-        ? res.map((e) => ScanModel.fromMap(e)).toList()
-        : [];
+    return res.isNotEmpty ? res.map((e) => ScanModel.fromMap(e)).toList() : [];
   }
 
   Future<ScanModel?> getScanById(int id) async {
@@ -74,11 +67,9 @@ class DBProvider {
   }
 
   Future<List<ScanModel>> getScanByTipus(String tipus) async {
-  final db = await database;
-  final res = await db.query('Scans', where: 'tipus = ?', whereArgs: [tipus]);
-  return res.isNotEmpty
-      ? res.map((e) => ScanModel.fromMap(e)).toList()
-      : [];
+    final db = await database;
+    final res = await db.query('Scans', where: 'tipus = ?', whereArgs: [tipus]);
+    return res.isNotEmpty ? res.map((e) => ScanModel.fromMap(e)).toList() : [];
   }
 
   Future<int> updateScan(ScanModel nouScan) async {
@@ -99,5 +90,4 @@ class DBProvider {
     final res = await db.delete('Scans');
     return res;
   }
-
 }
